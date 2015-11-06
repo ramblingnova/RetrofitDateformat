@@ -82,7 +82,7 @@ public class NetworkManager {
         @GET("/users/{userId}")
         Call<User> selectUser(@Path("userId") String user_id);
 
-        // 회원가입 app.post('/users', users.create); 나중에 전번은 요 형태로... 000-0000-0000 @Body를 넘겨야 하나?
+        // 회원가입 app.post('/users', users.create)
         @POST("/users")
         Call<ResponseForAndroidRequest> insertUser(@Body User user);
 
@@ -94,23 +94,19 @@ public class NetworkManager {
         //@FormUrlEncoded
         @Multipart
         @POST("/bikes/users")
-        Call<ResponseForAndroidRequest> insertBicycle(
-                @Part("image") RequestBody file,
+        Call<ResponseForAndroidRequest> insertBicycle(@Part("image") RequestBody file,
                                                       @Part("image") RequestBody file2,
-//                bicycle.getType(),
-//        bicycle.getHeight(),
-//                bicycle.getTitle(),
-//                bicycle.getIntro(),
-//                ""+bicycle.getPrice().hour,
-//                ""+bicycle.getPrice().day,
-//                ""+bicycle.getPrice().month
-                                                      @Part("type")String type,
-                                                      @Part("height")String height,
-                                                      @Part("title")String title,
-                                                      @Part("intro")String intro,
-                                                      @Part("price.hour")int price_hour,
-                                                      @Part("price.day")int price_day,
-                                                      @Part("price.month")int price_month);
+                                                      @Part("type") String type,
+                                                      @Part("height") String height,
+                                                      @Part("title") String title,
+                                                      @Part("intro") String intro,
+                                                      @Part("price.hour") int price_hour,
+                                                      @Part("price.day") int price_day,
+                                                      @Part("price.month") int price_month);
+
+        @Multipart
+        @POST("/test")
+        Call<ResponseForAndroidRequest> test(@Part("image") RequestBody file);
 
         // TODO 보유자전거조회 app.get('/bikes/users',auth.requiresLogin,bikes.myList); 유저아이디는?
         @GET("/bikes/users")
@@ -139,7 +135,7 @@ public class NetworkManager {
         // 로그인
         @FormUrlEncoded
         @POST("/users/session")
-        Call<ResponseForAndroidRequest> test3(@Field("email") String email, @Field("password") String password);
+        Call<ResponseForAndroidRequest> login(@Field("email") String email, @Field("password") String password);
 
         // TODO 내평가보기 app.get('/comments',auth.requiresLogin,comments.show);
         @GET("/comments")
@@ -254,7 +250,7 @@ public class NetworkManager {
 
     // 로그인
     public Call<ResponseForAndroidRequest> login(String email, String password) {
-        return serverUrl.test3(email, password);
+        return serverUrl.login(email, password);
     }
 
     // TODO 내평가보기
@@ -291,12 +287,9 @@ public class NetworkManager {
         result.enqueue(callback);
     }
 
-    // 본인정보조회
-    public void login(Callback<User> callback) {
-        NetworkManager networkManager = NetworkManager.getInstance();
-        User user = new User();
-        user.set_id("563093ca49274fc454c610d5");
-        Call<User> result = networkManager.selectUser(user.get_id());
-        result.enqueue(callback);
+    // DELEME 시험용
+    public Call<ResponseForAndroidRequest> test(RequestBody file) {
+        file.toString();
+        return serverUrl.test(file);
     }
 }

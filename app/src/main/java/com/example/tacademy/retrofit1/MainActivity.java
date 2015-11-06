@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.eowise.imagemagick.ImageMagickPlugin;
 import com.example.tacademy.retrofit1.dao.Bicycle;
 import com.example.tacademy.retrofit1.dao.Comment;
+import com.example.tacademy.retrofit1.dao.Image;
 import com.example.tacademy.retrofit1.dao.Inquiry;
 import com.example.tacademy.retrofit1.dao.Price;
 import com.example.tacademy.retrofit1.dao.ResponseForAndroidRequest;
@@ -41,98 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        NetworkManager networkManager = NetworkManager.getInstance();
-//        Call<ResponseForAndroidRequest> result = networkManager.login("admin@admin.com","dltjdrb");
-//        result.enqueue(new Callback<ResponseForAndroidRequest>() {
-//            @Override
-//            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-//                ResponseForAndroidRequest responseForAndroidRequest = response.body();
-//                if(responseForAndroidRequest!= null)
-//                    Log.i("result","code:"+responseForAndroidRequest.getCode()+"/msg:"+responseForAndroidRequest.getMsg());
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        NetworkManager networkManager = NetworkManager.getInstance();
-//                        Bikes b = new Bikes();
-//                        Images img = new Images("aaaa");
-//                        Images img1 = new Images("bbbb");
-//                        b.title = "수정된 자전거";
-//                        b.type = "픽시";
-////                        b.images = new ArrayList<Images>();
-////                        b.images.add(img);
-////                        b.images.add(img1);
-//                        Call<ResponseForAndroidRequest> result = networkManager.getComment(b);
-//                        result.enqueue(new Callback<ResponseForAndroidRequest>() {
-//                            @Override
-//                            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-//                                ResponseForAndroidRequest responseForAndroidRequest = response.body();
-//                                Log.i("result", "code:" + responseForAndroidRequest.getCode() + "/msg:" + responseForAndroidRequest.getMsg());
-//                            }
-//                            @Override
-//                            public void onFailure(Throwable t) {
-//                                Log.e("error",t.toString());
-//                            }
-//                        });
-//                    }
-//                },3000);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Log.e("error",t.toString());
-//            }
-//        });
-
-        login("", "");
-//        Button btn = (Button)findViewById(R.id.my_text);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NetworkManager networkManager = NetworkManager.getInstance();
-//                networkManager.selectUser(new Callback<User>() {
-//                    @Override
-//                    public void onResponse(Response<User> response, Retrofit retrofit) {
-//                        User user = response.body();
-//                        User rUser;
-//                        if (user != null) {
-//                            Log.i("result", "onResponse onResponse _id:" + user.get_id()
-//                                    + " updatedAt:" + user.getUpdatedAt()
-//                                    + " createdAt:" + user.getCreatedAt()
-//                                    + " authToken:" + user.getAuthToken()
-//                                    + " salt:" + user.getSalt()
-//                                    + " hashed_password:" + user.getHashed_password()
-//                                    + " provider:" + user.getProvider()
-//                                    + " email:" + user.getEmail()
-//                                    + " name:" + user.getName());
-//                            rUser = new User();
-//                            rUser.set_id(user.get_id());
-//                            rUser.setUpdatedAt(user.getUpdatedAt());
-//                            rUser.setCreatedAt(user.getCreatedAt());
-//                            rUser.setAuthToken(user.getAuthToken());
-//                            rUser.setSalt(user.getSalt());
-//                            rUser.setHashed_password(user.getHashed_password());
-//                            rUser.setProvider(user.getProvider());
-//                            rUser.setEmail(user.getEmail());
-//                            rUser.setName(user.getName());
-//                            Intent intent = new Intent(MainActivity.this, SubActivity.class);
-//                            intent.putExtra("user", user.getName());
-//                            startActivity(intent);
-//                        } else
-//                            Log.i("result", "onResponse onResponse Object: NULL");
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable t) {
-//                        Log.e("error", "onResponse onFailure Error:" + t.toString());
-//                    }
-//                });
-//            }
-//        });
-
-//        insertUser("", "", "", "");
-
 //        Intent intent = new Intent(MainActivity.this, SubActivity.class);
 //        startActivity(intent);
+
+//        insertUser("", "", "", "");
+//        login("", "");
+        test();
     }
 
 //    new Callback<User>() {
@@ -145,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 //                        + " createdAt:" + user.getCreatedAt()
 //                        + " authToken:" + user.getAuthToken()
 //                        + " salt:" + user.getSalt()
-//                        + " hashed_password:" + user.getHashed_password() 스냅샷 콜백으로 빗맵으로 싱글탑
+//                        + " hashed_password:" + user.getHashed_password()
 //                        + " provider:" + user.getProvider()
 //                        + " email:" + user.getEmail()
 //                        + " name:" + user.getName());
@@ -169,30 +85,30 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-    // TODO 회원가입
-//    public void insertUser(String name, String email, String phone, String hashed_password) {
-//        User user = new User();
-//        user.setName("이름");
-//        user.setEmail("1234567@email.com");
-//        user.setPhone("010-234-1234");
-//        user.setPassword("12345");
-//
-//        NetworkManager networkManager = NetworkManager.getInstance();
-//        Call<ResponseForAndroidRequest> result = networkManager.insertUser(user);
-//        result.enqueue(new Callback<ResponseForAndroidRequest>() {
-//            @Override
-//            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-//                ResponseForAndroidRequest responseForAndroidRequest = response.body();
-//                if (responseForAndroidRequest != null)
-//                    Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Log.e("error", "onFailure Error:" + t.toString());
-//            }
-//        });
-//    }
+    // 회원가입
+    public void insertUser(String name, String email, String phone, String hashed_password) {
+        User user = new User();
+        user.setName("이름");
+        user.setEmail("1234567@email.com");
+        user.setPhone("010-234-1234");
+        user.setPassword("12345");
+
+        NetworkManager networkManager = NetworkManager.getInstance();
+        Call<ResponseForAndroidRequest> result = networkManager.insertUser(user);
+        result.enqueue(new Callback<ResponseForAndroidRequest>() {
+            @Override
+            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
+                ResponseForAndroidRequest responseForAndroidRequest = response.body();
+                if (responseForAndroidRequest != null)
+                    Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("error", "onFailure Error:" + t.toString());
+            }
+        });
+    }
 
     // TODO 회원수정
     public void updateUser(String name, String email, String phone) {
@@ -221,20 +137,6 @@ public class MainActivity extends AppCompatActivity {
     // TODO 보유자전거등록
     public void insertBicycle() {
         NetworkManager networkManager = NetworkManager.getInstance();
-//        Call<ResponseForAndroidRequest> result = networkManager.insertBicycle();
-//        result.enqueue(new Callback<ResponseForAndroidRequest>() {
-//            @Override
-//            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-//                ResponseForAndroidRequest responseForAndroidRequest = response.body();
-//                if (responseForAndroidRequest != null)
-//                    Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Log.e("error", "onFailure Error:" + t.toString());
-//            }
-//        });
 
         Bicycle b = new Bicycle();
         b.setType("03");
@@ -246,9 +148,7 @@ public class MainActivity extends AppCompatActivity {
         price.day = 1000;
         price.month = 1111;
         b.setPrice(price);
-
         File file = new File("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-11-01-13-38-15.png");
-//        file.
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
         networkManager.insertBicycle(
@@ -257,12 +157,14 @@ public class MainActivity extends AppCompatActivity {
                 b).enqueue(new Callback<ResponseForAndroidRequest>() {
             @Override
             public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-                Log.v("Upload", "success");
+                ResponseForAndroidRequest responseForAndroidRequest = response.body();
+                if (responseForAndroidRequest != null)
+                    Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("Upload", t.getMessage());
+                Log.e("error", "onFailure Error:" + t.toString());
             }
         });
     }
@@ -426,22 +328,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    NetworkManager networkManager = NetworkManager.getInstance();
-//    Call<ResponseForAndroidRequest> result = networkManager.login("admin@admin.com", "dltjdrb");
-//    result.enqueue(new Callback<ResponseForAndroidRequest>() {
-//        @Override
-//        public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
-//            ResponseForAndroidRequest responseForAndroidRequest = response.body();
-//            if (responseForAndroidRequest != null)
-//                Log.i("result", "onResponse Code:" + responseForAndroidRequest.getCode() + " / Result:" + responseForAndroidRequest.getResult());
-//
-//        }
-//
-//        @Override
-//        public void onFailure(Throwable t) {
-//            Log.e("error", "onFailure Error:" + t.toString());
-//        }
-//    });
     // TODO 로그인 정규식 체크 http://www.java2go.net/java/java_regex.html, http://wintness.tistory.com/225
     public void login(String email, String password) {
         NetworkManager networkManager = NetworkManager.getInstance();
@@ -452,7 +338,8 @@ public class MainActivity extends AppCompatActivity {
                 ResponseForAndroidRequest responseForAndroidRequest = response.body();
                 if (responseForAndroidRequest != null)
                     Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
-                insertBicycle();
+//                insertBicycle();
+                test();
             }
 
             @Override
@@ -556,6 +443,28 @@ public class MainActivity extends AppCompatActivity {
         NetworkManager networkManager = NetworkManager.getInstance();
         Call<ResponseForAndroidRequest> result = networkManager.insertInquiry();
         result.enqueue(new Callback<ResponseForAndroidRequest>() {
+            @Override
+            public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
+                ResponseForAndroidRequest responseForAndroidRequest = response.body();
+                if (responseForAndroidRequest != null)
+                    Log.i("result", "onResponse Success:" + responseForAndroidRequest.getSuccess() + " / Result:" + responseForAndroidRequest.getResult());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("error", "onFailure Error:" + t.toString());
+            }
+        });
+    }
+
+    public void test() {
+        NetworkManager networkManager = NetworkManager.getInstance();
+
+        File file = new File("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-11-01-13-38-15.png");
+//        Log.i("test", "test file:" + file.toString());
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        networkManager.test(requestBody).enqueue(new Callback<ResponseForAndroidRequest>() {
             @Override
             public void onResponse(Response<ResponseForAndroidRequest> response, Retrofit retrofit) {
                 ResponseForAndroidRequest responseForAndroidRequest = response.body();

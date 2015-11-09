@@ -26,8 +26,8 @@ public class SubActivity extends AppCompatActivity {
 //        Intent intent = getIntent();
 //        TextView tv = (TextView)findViewById(R.id.sub_text);
 //        tv.setText(intent.getStringExtra("user"));
-        ImageView iv = (ImageView)findViewById(R.id.sub_image);
 //        iv.setImageBitmap();
+        ImageView iv = (ImageView)findViewById(R.id.sub_image);
 
         ImageLoader loader;
         loader = ImageLoader.getInstance();

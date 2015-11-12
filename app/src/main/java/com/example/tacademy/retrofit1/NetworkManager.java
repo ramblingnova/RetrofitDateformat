@@ -2,10 +2,13 @@ package com.example.tacademy.retrofit1;
 
 import android.util.Log;
 
+import com.example.tacademy.retrofit1.dao.Bike;
 import com.example.tacademy.retrofit1.dao.Comment;
-import com.example.tacademy.retrofit1.dao.ResponseForAndroidRequest;
+import com.example.tacademy.retrofit1.dao.GetObject;
+import com.example.tacademy.retrofit1.dao.Inquires;
+import com.example.tacademy.retrofit1.dao.PostPutDeleteObject;
+import com.example.tacademy.retrofit1.dao.ReceiveObject;
 import com.example.tacademy.retrofit1.dao.User;
-import com.example.tacademy.retrofit1.dao.Bicycle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -46,7 +49,7 @@ import retrofit.mime.TypedFile;
 public class NetworkManager {
     private static NetworkManager networkManager;
     RestAdapter restAdapter;
-    ServerUrl serverUrl;
+    private ServerUrl serverUrl;
 
     private NetworkManager() {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -70,96 +73,87 @@ public class NetworkManager {
     }
 
     public interface ServerUrl {
-//        String baseUrl = "http://192.168.211.18:3000";
-        String baseUrl = "http://192.168.201.107:3000";
+        //        String baseUrl = "http://192.168.211.18:3000";
+        String baseUrl = "http://bikee.kr.pe";
 
-        // TODO 본인정보조회 app.get('/users/:userId',users.profile)
+        // 본인정보조회 app.get('/users/:userId',users.profile)
         @GET("/users/{userId}")
-        void selectUser(@Path("userId") String user_id, Callback<User> callback);
+        void selectUser(@Path("userId") String user_id, Callback<ReceiveObject> callback);
 
-        // TODO 회원가입 app.post('/users', users.create)
+        // 회원가입 app.post('/users', users.create)
         @POST("/users")
-        void insertUser(@Body User user, Callback<ResponseForAndroidRequest> callback);
+        void insertUser(@Body User user, Callback<ReceiveObject> callback);
 
-        // TODO 회원수정 app.put('/users/:userId',userAuth,users.edit);
-        @PUT("/users/{userId}")
-        void updateUser(@Path("userId") String user_id, @Body User user, Callback<ResponseForAndroidRequest> callback);
+        // 회원수정 app.put('/users/:userId',userAuth,users.edit);
+        @PUT("/users")
+        void updateUser(@Body User user, Callback<ReceiveObject> callback);
 
-        // TODO 보유자전거등록 app.post('/bikes/users',auth.requiresLogin,bikes.create);
+        // 보유자전거등록 app.post('/bikes/users',auth.requiresLogin,bikes.create);
         @Multipart
         @POST("/bikes/users")
         void insertBicycle(@Part("image") TypedFile file1,
                            @Part("image") TypedFile file2,
-                           @Part("type") String type,
-                           @Part("height") String height,
-                           @Part("title") String title,
-                           @Part("intro") String intro,
-                           @Part("price.hour") int price_hour,
-                           @Part("price.day") int price_day,
-                           @Part("price.month") int price_month,
-                           Callback<ResponseForAndroidRequest> callback);
+                           @Part("bike") Bike bike,
+                           Callback<ReceiveObject> callback);
 
-        // TODO 보유자전거조회 app.get('/bikes/users',auth.requiresLogin,bikes.myList); 유저아이디는?
+        // 보유자전거조회 app.get('/bikes/users',auth.requiresLogin,bikes.myList); 유저아이디는?
         @GET("/bikes/users")
-        void selectBicycle(Callback<List<Bicycle>> callback);
+        void selectBicycle(Callback<ReceiveObject> callback);
 
-        // TODO 보유자전거수정 app.put('/bikes/users/:bikeId',bikeAuth,bikes.edit);
+        // 보유자전거수정 app.put('/bikes/users/:bikeId',bikeAuth,bikes.edit);
+        @Multipart
         @PUT("/bikes/users/{bikeId}")
-        void updateBicycle(@Path("bikeID") String bike_id, Callback<ResponseForAndroidRequest> callback);
+        void updateBicycle(@Path("bikeId") String bike_id, @Part("bike") Bike bike, Callback<ReceiveObject> callback);
 
-        // TODO 보유자전거 활성화/비활성화 app.put('/bikes/active/:bikeId',bikeAuth,bikes.active);
+        // 보유자전거 활성화/비활성화 app.put('/bikes/active/:bikeId',bikeAuth,bikes.active);
         @PUT("/bikes/active/{bikeId}")
-        void updateBicycleOnOff(@Path("bikeID") String bike_id, Callback<ResponseForAndroidRequest> callback);
+        void updateBicycleOnOff(@Path("bikeId") String bike_id, Callback<ReceiveObject> callback);
 
-        // TODO 보유자전거삭제 app.delete('/bikes/users/:bikeId',bikeAuth,bikes.delete);
+        // 보유자전거삭제 app.delete('/bikes/users/:bikeId',bikeAuth,bikes.delete);
         @DELETE("/bikes/users/{bikeId}")
-        void deleteBicycle(@Path("bikeId") String bike_id, Callback<ResponseForAndroidRequest> callback);
+        void deleteBicycle(@Path("bikeId") String bike_id, Callback<ReceiveObject> callback);
 
-        // TODO 전체자전거조회 app.get('/bikes',bikes.index);
+        // 전체자전거조회 app.get('/bikes',bikes.index);
         @GET("/bikes")
-        void selectAllBicycle(Callback<List<Bicycle>> callback);
+        void selectAllBicycle(Callback<ReceiveObject> callback);
 
-        // TODO 자전거상세조회 app.get('/bikes/:bikeId/detail',bikes.detail);
+        // 자전거상세조회 app.get('/bikes/:bikeId/detail',bikes.detail);
         @GET("/bikes/{bikeId}/detail")
-        void selectBicycleDetail(@Path("bikeId") String bike_id, Callback<Bicycle> callback);
+        void selectBicycleDetail(@Path("bikeId") String bike_id, Callback<ReceiveObject> callback);
 
         // 로그인
         @FormUrlEncoded
         @POST("/users/session")
-        void login(@Field("email") String email, @Field("password") String password, Callback<ResponseForAndroidRequest> callback);
+        void login(@Field("email") String email, @Field("password") String password, Callback<ReceiveObject> callback);
 
-        // TODO 내평가보기 app.get('/comments',auth.requiresLogin,comments.show);
+        // 내평가보기 app.get('/comments',auth.requiresLogin,comments.show);
         @GET("/comments")
-        void selectUserComment(Callback<List<Comment>> callback);
+        void selectUserComment(Callback<ReceiveObject> callback);
 
-        // TODO 후기작성실패 app.get('/authfail',comments.fail);
-        @GET("/authfail")
-        void isFailInsertComment(Callback<ResponseForAndroidRequest> callback);
-
-        // TODO 자전거후기작성 app.post('/comments/:bikeId',commentAuth,comments.create);
+        // 자전거후기작성 app.post('/comments/:bikeId',commentAuth,comments.create);
         @POST("/comments/{bikeId}")
-        void insertBicycleComment(@Path("bikeId") String bike_id, Callback<ResponseForAndroidRequest> callback);
+        void insertBicycleComment(@Path("bikeId") String bike_id, @Body Comment comments, Callback<ReceiveObject> callback);
 
-        // TODO 자전거후기보기 app.get('/comments/:bikeId',comments.bike);
+        // 자전거후기보기 app.get('/comments/:bikeId',comments.bike);
         @GET("/comments/{bikeId}")
-        void selectBicycleComment(@Path("bikeId") String bike_id, Callback<List<Comment>> callback);
+        void selectBicycleComment(@Path("bikeId") String bike_id, Callback<ReceiveObject> callback);
 
-        // TODO 고객문의등록 app.post('/inquiry',auth.requiresLogin,inquires.create);
+        // 고객문의등록 app.post('/inquiry',auth.requiresLogin,inquires.create);
         @POST("/inquiry")
-        void insertInquiry(Callback<ResponseForAndroidRequest> callback);
+        void insertInquiry(@Body Inquires inquires, Callback<ReceiveObject> callback);
 
-        @Multipart
-        @POST("/test")
-        void test(@Part("image") TypedFile file1, @Part("image") TypedFile file2, @Part("description") String description, Callback<String> cb);
-
-        @POST("/register/")
-        void registerGCM(@Field("token") String registerationID,
-                         @Field("deviceID") String deviceID,
-                         @Field("deviceName") String deviceName,
-                         @Field("email") String email);
-
-        @POST("/message/{userID}")
-        void sendMessage(@Path("userID") String user_id, @Field("message") String message);
+//        @Multipart
+//        @POST("/test")
+//        void test(@Part("image") TypedFile file1, @Part("image") TypedFile file2, @Part("description") String description, Callback<String> cb);
+//
+//        @POST("/register/")
+//        void registerGCM(@Field("token") String registerationID,
+//                         @Field("deviceID") String deviceID,
+//                         @Field("deviceName") String deviceName,
+//                         @Field("email") String email);
+//
+//        @POST("/message/{userID}")
+//        void sendMessage(@Path("userID") String user_id, @Field("message") String message);
     }
 
     // 모든 날짜 형식을 변환하는 메소드
@@ -177,115 +171,82 @@ public class NetworkManager {
         }
     }
 
-    // TODO 본인정보조회
-    public void selectUser(String user_id, Callback<User> callback) {
+    // 본인정보조회
+    public void selectUser(String user_id, Callback<ReceiveObject> callback) {
         serverUrl.selectUser(user_id, callback);
     }
 
-    // TODO 회원가입
-    public void insertUser(User user, Callback<ResponseForAndroidRequest> callback) {
+    // 회원가입
+    public void insertUser(User user, Callback<ReceiveObject> callback) {
         serverUrl.insertUser(user, callback);
     }
 
-    // TODO 회원수정
-    public void updateUser(String user_id, User user, Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.updateUser(user_id, user, callback);
+    // 회원수정
+    public void updateUser(User user, Callback<ReceiveObject> callback) {
+        serverUrl.updateUser(user, callback);
     }
 
-    // TODO 보유자전거등록
-    public void insertBicycle(TypedFile file1, TypedFile file2, Bicycle bicycle, Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.insertBicycle(
-                file1,
-                file2,
-                bicycle.getType(),
-                bicycle.getHeight(),
-                bicycle.getTitle(),
-                bicycle.getIntro(),
-                bicycle.getPrice().hour,
-                bicycle.getPrice().day,
-                bicycle.getPrice().month,
-                callback
-        );
+    // 보유자전거등록
+    public void insertBicycle(TypedFile file1, TypedFile file2, Bike bike, Callback<ReceiveObject> callback) {
+        serverUrl.insertBicycle(file1, file2, bike, callback);
     }
 
-    // TODO 보유자전거조회
-    public void selectBicycle(Callback<List<Bicycle>> callback) {
+    // 보유자전거조회
+    public void selectBicycle(Callback<ReceiveObject> callback) {
         serverUrl.selectBicycle(callback);
     }
 
-    // TODO 보유자전거수정
-    public void updateBicycle(String bike_id, Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.updateBicycle(bike_id, callback);
+    // 보유자전거수정
+    public void updateBicycle(String bike_id, Bike bike, Callback<ReceiveObject> callback) {
+        serverUrl.updateBicycle(bike_id, bike, callback);
     }
 
-    // TODO 보유자전거 활성화/비활성화
-    public void updateBicycleOnOff(String bike_id, Callback<ResponseForAndroidRequest> callback) {
+    // 보유자전거 활성화/비활성화
+    public void updateBicycleOnOff(String bike_id, Callback<ReceiveObject> callback) {
         serverUrl.updateBicycleOnOff(bike_id, callback);
     }
 
-//    // TODO 보유자전거삭제
-    public void deleteBicycle(String bike_id, Callback<ResponseForAndroidRequest> callback) {
+    // 보유자전거삭제
+    public void deleteBicycle(String bike_id, Callback<ReceiveObject> callback) {
         serverUrl.deleteBicycle(bike_id, callback);
     }
 
-    // TODO 전체자전거조회
-    public void selectAllBicycle(Callback<List<Bicycle>> callback) {
+    // 전체자전거조회
+    public void selectAllBicycle(Callback<ReceiveObject> callback) {
         serverUrl.selectAllBicycle(callback);
     }
 
-    // TODO 자전거상세조회
-    public void selectBicycleDetail(String bike_id, Callback<Bicycle> callback) {
+    // 자전거상세조회
+    public void selectBicycleDetail(String bike_id, Callback<ReceiveObject> callback) {
         serverUrl.selectBicycleDetail(bike_id, callback);
     }
 
-    // 로그인
-    public void login(String email, String password, Callback<ResponseForAndroidRequest> callback) {
+    // 로그인 정규식 체크 http://www.java2go.net/java/java_regex.html, http://wintness.tistory.com/225
+    public void login(String email, String password, Callback<ReceiveObject> callback) {
         serverUrl.login(email, password, callback);
     }
 
-    // TODO 내평가보기
-    public void selectUserComment(Callback<List<Comment>> callback) {
+    // 내평가보기
+    public void selectUserComment(Callback<ReceiveObject> callback) {
         serverUrl.selectUserComment(callback);
     }
 
-    // TODO 후기작성실패
-    public void isFailInsertComment(Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.isFailInsertComment(callback);
+    // 자전거후기작성
+    public void insertBicycleComment(String bike_id, Comment comment, Callback<ReceiveObject> callback) {
+        serverUrl.insertBicycleComment(bike_id, comment, callback);
     }
 
-    // TODO 자전거후기작성
-    public void insertBicycleComment(String bike_id, Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.insertBicycleComment(bike_id, callback);
-    }
-
-    // TODO 자전거후기보기
-    public void selectBicycleComment(String bike_id, Callback<List<Comment>> callback) {
+    // 자전거후기보기
+    public void selectBicycleComment(String bike_id, Callback<ReceiveObject> callback) {
         serverUrl.selectBicycleComment(bike_id, callback);
     }
 
-    // TODO 고객문의등록
-    public void insertInquiry(Callback<ResponseForAndroidRequest> callback) {
-        serverUrl.insertInquiry(callback);
+    // 고객문의등록
+    public void insertInquiry(Inquires inquires, Callback<ReceiveObject> callback) {
+        serverUrl.insertInquiry(inquires, callback);
     }
 
-    public void test(TypedFile file1, TypedFile file2, Callback<String> cb) {
-        serverUrl.test(file1, file2, "desc", cb);
-    }
-
-    public void registerGCM(String registerationID, String deviceID, String deviceName, String email) {
-        serverUrl.registerGCM(registerationID, deviceID, deviceName, email);
-    }
-
-    public void sendMessage(String user_id, String message) {
-        serverUrl.sendMessage(user_id, message);
-    }
-
-//    // TODO 본인정보조회
-//    public void selectUser(Callback<User> callback) {
-//        NetworkManager networkManager = NetworkManager.getInstance();
-//        User user = new User();
-//        user.set_id("563093ca49274fc454c610d5");
-//        Call<User> result = networkManager.selectUser(user.get_id());
-//        result.enqueue(callback);
+//    public void test(TypedFile file1, TypedFile file2, Callback<String> cb) {
+//        serverUrl.test(file1, file2, "desc", cb);
 //    }
 }

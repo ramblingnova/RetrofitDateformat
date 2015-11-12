@@ -3,21 +3,29 @@ package com.example.tacademy.retrofit1.dao;
 import java.util.Date;
 
 /**
- * Created by Tacademy on 2015-11-05.
+ * Created by Tacademy on 2015-11-12.
  */
 public class Comment {
-    public String user;
-    public String _id;
-    public Date createdAt;
-    public String body;
-    public int point;
+    public Integer point = null;
+    public Writer writer = null;
+    public String _id = null;
+    public Date createdAt = null;
+    public String body = null;
 
-    public String getUser() {
-        return user;
+    public Integer getPoint() {
+        return point;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
     }
 
     public String get_id() {
@@ -42,13 +50,5 @@ public class Comment {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
     }
 }

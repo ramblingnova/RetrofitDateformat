@@ -4,9 +4,7 @@ import android.util.Log;
 
 import com.example.tacademy.retrofit1.dao.Bike;
 import com.example.tacademy.retrofit1.dao.Comment;
-import com.example.tacademy.retrofit1.dao.GetObject;
 import com.example.tacademy.retrofit1.dao.Inquires;
-import com.example.tacademy.retrofit1.dao.PostPutDeleteObject;
 import com.example.tacademy.retrofit1.dao.ReceiveObject;
 import com.example.tacademy.retrofit1.dao.User;
 import com.google.gson.Gson;

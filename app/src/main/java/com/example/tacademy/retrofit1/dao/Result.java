@@ -21,7 +21,7 @@ public class Result {
     public String title = null;
     public Boolean delflag = null;
     public Price price = null;
-    public Image image = null;
+    public String image = null;
     public String intro = null;
     public Loc loc = null;
     public Boolean smartlock = null;
@@ -30,6 +30,10 @@ public class Result {
     public String provider = null;
     public String email = null;
     public String name = null;
+    public String mobile = null;
+    public int auth_number = -1;
+    public boolean accepted = false;
+    public String id = null;
 
     public String get_id() {
         return _id;
@@ -143,11 +147,19 @@ public class Result {
         this.price = price;
     }
 
-    public Image getImage() {
+//    public Image getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -213,5 +225,37 @@ public class Result {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public int getAuth_number() {
+        return auth_number;
+    }
+
+    public void setAuth_number(int auth_number) {
+        this.auth_number = auth_number;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,45 +1,20 @@
 package com.example.tacademy.retrofit1;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.tacademy.retrofit1.dao.Bike;
-import com.example.tacademy.retrofit1.dao.Comment;
-import com.example.tacademy.retrofit1.dao.GetObject;
-import com.example.tacademy.retrofit1.dao.Image;
 import com.example.tacademy.retrofit1.dao.Inquires;
-import com.example.tacademy.retrofit1.dao.PostPutDeleteObject;
-import com.example.tacademy.retrofit1.dao.Price;
 import com.example.tacademy.retrofit1.dao.ReceiveObject;
 import com.example.tacademy.retrofit1.dao.Result;
 import com.example.tacademy.retrofit1.dao.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.RequestBody;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
@@ -55,16 +30,17 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(MainActivity.this, SubActivity.class);
 //        startActivity(intent);
 
-        // 실제 사용
-        // 로그인
-        if (Util.checkEmailRegularExpressions("admin@admin.com"))
-            Log.i("result", "valid email form");
-        else
-            Log.e("error", "invalid email form");
-        NetworkManager.getInstance().login("admin@admin.com", "dltjdrb", new Callback<ReceiveObject>() {
-            @Override
-            public void success(ReceiveObject receiveObject, Response response) {
-                Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Msg : " + receiveObject.getMsg());
+//        // 실제 사용
+//        // 로그인
+//        if (Util.checkEmailRegularExpressions("admin@admin.com"))
+//            Log.i("result", "valid email form");
+//        else
+//            Log.e("error", "invalid email form");
+//        NetworkManager.getInstance().login("admin@admin.com", "dltjdrb", new Callback<ReceiveObject>() {
+//            @Override
+//            public void success(ReceiveObject receiveObject, Response response) {
+//                Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Msg : " + receiveObject.getMsg());
+
 //                // 회원정보보기
 //                String user_id = "5630904020ec3699522a999e";
 //                NetworkManager.getInstance().selectUser(user_id, new Callback<ReceiveObject>() {
@@ -280,29 +256,29 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-                // TODO 고객문의등록
-                Inquires inquires = new Inquires();
-                inquires.setTitle("문의");
-                inquires.setBody("내용");
-                NetworkManager.getInstance().insertInquiry(inquires, new Callback<ReceiveObject>() {
-                    @Override
-                    public void success(ReceiveObject receiveObject, Response response) {
-                        Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Success : " + receiveObject.isSuccess() + ", Msg : " + receiveObject.getMsg() + ", Error : ");
-                    }
+//                // TODO 고객문의등록
+//                Inquires inquires = new Inquires();
+//                inquires.setTitle("문의");
+//                inquires.setBody("내용");
+//                NetworkManager.getInstance().insertInquiry(inquires, new Callback<ReceiveObject>() {
+//                    @Override
+//                    public void success(ReceiveObject receiveObject, Response response) {
+//                        Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Success : " + receiveObject.isSuccess() + ", Msg : " + receiveObject.getMsg() + ", Error : ");
+//                    }
+//
+//                    @Override
+//                    public void failure(RetrofitError error) {
+//                        Log.e("error", "onFailure Error : " + error.toString());
+//                    }
+//                });
+//
+//            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.e("error", "onFailure Error : " + error.toString());
-                    }
-                });
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("error", "onFailure Error : " + error.toString());
-            }
-        });
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Log.e("error", "onFailure Error : " + error.toString());
+//            }
+//        });
 
 //        // 회원가입
 //        User user = new User();
@@ -314,6 +290,49 @@ public class MainActivity extends AppCompatActivity {
 //            @Override
 //            public void success(ReceiveObject receiveObject, Response response) {
 //                Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Success : " + receiveObject.isSuccess() + ", Msg : " + receiveObject.getMsg() + ", Error : ");
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Log.e("error", "onFailure Error : " + error.toString());
+//            }
+//        });
+
+//        // 인증번호요청하기
+//        String mobile = "010-3069-4106";
+//        NetworkManager.getInstance().requestAuthenticationNumber(mobile, new Callback<ReceiveObject>() {
+//            @Override
+//            public void success(ReceiveObject receiveObject, Response response) {
+//                Log.i("result", "onResponse Code : " + receiveObject.getCode()
+//                                + ", Success : " + receiveObject.isSuccess()
+//                                + ", Msg : " + receiveObject.getMsg()
+//                                + ", Error : "
+//                );
+//                for (Result result : receiveObject.getResult()) {
+//                    Log.i("result", "onResponse Id : " + result.getId());
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Log.e("error", "onFailure Error : " + error.toString());
+//            }
+//        });
+
+//        // 인증번호확인하기
+//        String authid = "564d9d0e32a130ea2a0731dc";
+//        String auth_number = "447671";
+//        NetworkManager.getInstance().confirmAuthenticationNumber(authid, auth_number, new Callback<ReceiveObject>() {
+//            @Override
+//            public void success(ReceiveObject receiveObject, Response response) {
+//                Log.i("result", "onResponse Code : " + receiveObject.getCode()
+//                                + ", Success : " + receiveObject.isSuccess()
+//                                + ", Msg : " + receiveObject.getMsg()
+//                                + ", Error : "
+//                );
+//                for (Result result : receiveObject.getResult()) {
+//                    Log.i("result", "onResponse Accepted : " + result.isAccepted());
+//                }
 //            }
 //
 //            @Override

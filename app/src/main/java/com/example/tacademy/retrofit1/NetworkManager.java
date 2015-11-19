@@ -124,6 +124,16 @@ public class NetworkManager {
         @POST("/users/session")
         void login(@Field("email") String email, @Field("password") String password, Callback<ReceiveObject> callback);
 
+        // 인증번호요청하기
+        @FormUrlEncoded
+        @POST("/sms/auth")
+        void requestAuthenticationNumber(@Field("mobile") String mobile, Callback<ReceiveObject> callback);
+
+        // 인증번호확인하기
+        @FormUrlEncoded
+        @POST("/sms/check/{authid}")
+        void confirmAuthenticationNumber(@Path("authid") String authid, @Field("auth_number") String auth_number, Callback<ReceiveObject> callback);
+
         // 내평가보기 app.get('/comments',auth.requiresLogin,comments.show);
         @GET("/comments")
         void selectUserComment(Callback<ReceiveObject> callback);
@@ -223,6 +233,16 @@ public class NetworkManager {
     public void login(String email, String password, Callback<ReceiveObject> callback) {
         serverUrl.login(email, password, callback);
     }
+
+    // 인증번호요청하기
+    public void requestAuthenticationNumber(String mobile, Callback<ReceiveObject> callback) {
+        serverUrl.requestAuthenticationNumber(mobile, callback);
+    }
+
+    public void confirmAuthenticationNumber(String authid, String auth_number, Callback<ReceiveObject> callback) {
+        serverUrl.confirmAuthenticationNumber(authid, auth_number, callback);
+    }
+
 
     // 내평가보기
     public void selectUserComment(Callback<ReceiveObject> callback) {

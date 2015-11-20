@@ -113,7 +113,15 @@ public class NetworkManager {
 
         // 전체자전거조회 app.get('/bikes',bikes.index);
         @GET("/bikes")
-        void selectAllBicycle(Callback<ReceiveObject> callback);
+        void selectAllBicycle(@Query("lat") String lat,
+                              @Query("lon") String lon,
+                              @Query("start") String start,
+                              @Query("end") String end,
+                              @Query("type") String type,
+                              @Query("height") String height,
+                              @Query("component") String component,
+                              @Query("smartlock") Boolean smartlock,
+                              Callback<ReceiveObject> callback);
 
         // 자전거상세조회 app.get('/bikes/:bikeId/detail',bikes.detail);
         @GET("/bikes/{bikeId}/detail")
@@ -123,6 +131,10 @@ public class NetworkManager {
         @FormUrlEncoded
         @POST("/users/session")
         void login(@Field("email") String email, @Field("password") String password, Callback<ReceiveObject> callback);
+
+        // 로그아웃
+        @GET("/logout")
+        void logout(Callback<ReceiveObject> callback);
 
         // 인증번호요청하기
         @FormUrlEncoded
@@ -220,8 +232,16 @@ public class NetworkManager {
     }
 
     // 전체자전거조회
-    public void selectAllBicycle(Callback<ReceiveObject> callback) {
-        serverUrl.selectAllBicycle(callback);
+    public void selectAllBicycle(String lat,
+                                 String lon,
+                                 String start,
+                                 String end,
+                                 String type,
+                                 String height,
+                                 String component,
+                                 Boolean smartlock,
+                                 Callback<ReceiveObject> callback) {
+        serverUrl.selectAllBicycle(lat, lon, start, end, type, height, component, smartlock, callback);
     }
 
     // 자전거상세조회
@@ -232,6 +252,11 @@ public class NetworkManager {
     // 로그인 정규식 체크 http://www.java2go.net/java/java_regex.html, http://wintness.tistory.com/225
     public void login(String email, String password, Callback<ReceiveObject> callback) {
         serverUrl.login(email, password, callback);
+    }
+
+    // 로그아웃
+    public void logout(Callback<ReceiveObject> callback) {
+        serverUrl.logout(callback);
     }
 
     // 인증번호요청하기

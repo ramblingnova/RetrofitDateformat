@@ -7,14 +7,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.tacademy.retrofit1.dao.Bike;
+import com.example.tacademy.retrofit1.dao.Comment;
 import com.example.tacademy.retrofit1.dao.Inquires;
+import com.example.tacademy.retrofit1.dao.Price;
 import com.example.tacademy.retrofit1.dao.ReceiveObject;
 import com.example.tacademy.retrofit1.dao.Result;
 import com.example.tacademy.retrofit1.dao.User;
 
+import java.io.File;
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper());
@@ -30,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(MainActivity.this, SubActivity.class);
 //        startActivity(intent);
 
-//        // 실제 사용
-//        // 로그인
-//        if (Util.checkEmailRegularExpressions("admin@admin.com"))
-//            Log.i("result", "valid email form");
-//        else
-//            Log.e("error", "invalid email form");
-//        NetworkManager.getInstance().login("admin@admin.com", "dltjdrb", new Callback<ReceiveObject>() {
-//            @Override
-//            public void success(ReceiveObject receiveObject, Response response) {
-//                Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Msg : " + receiveObject.getMsg());
+        // 실제 사용
+        // 로그인
+        if (Util.checkEmailRegularExpressions("admin@admin.com"))
+            Log.i("result", "valid email form");
+        else
+            Log.e("error", "invalid email form");
+        NetworkManager.getInstance().login("admin@admin.com", "dltjdrb", new Callback<ReceiveObject>() {
+            @Override
+            public void success(ReceiveObject receiveObject, Response response) {
+                Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Msg : " + receiveObject.getMsg());
 
 //                // 회원정보보기
 //                String user_id = "5630904020ec3699522a999e";
@@ -78,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                // 보유자전거등록
 //                File file1 = new File("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-11-01-13-38-15.png");
-//                TypedFile typedFile1 = new TypedFile("image/png", file1);
+//                    TypedFile typedFile1 = new TypedFile("image/png", file1);
 //                File file2 = new File("/storage/emulated/0/Pictures/Screenshots/Screenshot_2015-11-01-13-38-17.png");
 //                TypedFile typedFile2 = new TypedFile("image/png", file2);
 //                Bike bike = new Bike();
@@ -236,25 +243,25 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-//                String bicycle_id = "563c0bea7ba017ec1915c9cb";
-//                // 자전거후기보기
-//                NetworkManager.getInstance().selectBicycleComment(bicycle_id, new Callback<ReceiveObject>() {
-//                    @Override
-//                    public void success(ReceiveObject receiveObject, Response response) {
-//                        Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Success : " + receiveObject.isSuccess() + ", Msg : " + receiveObject.getMsg() + ", Error : ");
-//                        List<Result> results = receiveObject.getResult();
-//                        for (Result result : results) {
-//                            for(Comment comment : result.getComments()) {
-//                                Log.i("result", "onResponse Point : " + comment.getPoint() + ", Body : " + comment.getBody() + ", writer.name : " + comment.getWriter().getName());
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        Log.e("error", "onFailure Error : " + error.toString());
-//                    }
-//                });
+                String bicycle_id = "563c0aa79e89f9bc1bc226a2";
+                // 자전거후기보기
+                NetworkManager.getInstance().selectBicycleComment(bicycle_id, new Callback<ReceiveObject>() {
+                    @Override
+                    public void success(ReceiveObject receiveObject, Response response) {
+                        Log.i("result", "onResponse Code : " + receiveObject.getCode() + ", Success : " + receiveObject.isSuccess() + ", Msg : " + receiveObject.getMsg() + ", Error : ");
+                        List<Result> results = receiveObject.getResult();
+                        for (Result result : results) {
+                            for(Comment comment : result.getComments()) {
+                                Log.i("result", "onResponse Point : " + comment.getPoint() + ", Body : " + comment.getBody() + ", writer.name : " + comment.getWriter().getName());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("error", "onFailure Error : " + error.toString());
+                    }
+                });
 
 //                // TODO 고객문의등록
 //                Inquires inquires = new Inquires();
@@ -272,13 +279,12 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 //
-//            }
-
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.e("error", "onFailure Error : " + error.toString());
-//            }
-//        });
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("error", "onFailure Error : " + error.toString());
+            }
+        });
 
 //        // 회원가입
 //        User user = new User();
